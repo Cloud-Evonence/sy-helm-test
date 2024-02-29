@@ -43,7 +43,7 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t ghcr.io/${{ github.repository }}/nginx-hello-world:latest./nginx
+          docker build -t ghcr.io/${{ github.repository }}/nginx-hello-world:latest ./nginx
           docker push ghcr.io/${{ github.repository }}/nginx-hello-world:latest
 
       - name: Install Helm

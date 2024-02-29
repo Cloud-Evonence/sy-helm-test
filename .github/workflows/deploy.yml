@@ -44,6 +44,7 @@ jobs:
       - name: Build and push Docker image
         run: |
           docker build -t ghcr.io/sy-helm-test/nginx-hello-world:latest ./nginx
+          echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u $ --password-stdin
           docker push ghcr.io/sy-helm-test/nginx-hello-world:latest
 
       - name: Install Helm

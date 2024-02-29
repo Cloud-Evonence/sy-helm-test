@@ -33,7 +33,6 @@ jobs:
           service_account: ${{ secrets.SERVICE_ACCOUNT }}
           project_id: ${{ env.GCP_PROJECT_ID }}
           gcp_region: ${{ env.REGION }}
-          gcp_zone: ${{ env.ZONE }}
 
       - name: Configure Docker
         uses: docker/login-action@v2
@@ -55,7 +54,6 @@ jobs:
       - name: Deploy with Helm
         run: |
           gcloud container clusters get-credentials $GKE_CLUSTER \
-            --zone $ZONE \
             --region $REGION && \
           helm upgrade --install nginx-hello-world ./nginx-hello-world \
             --set image.repository=ghcr.io/sy-helm-test/nginx-hello-world \

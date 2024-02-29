@@ -55,6 +55,7 @@ jobs:
         run: |
           gcloud container clusters get-credentials $GKE_CLUSTER \
             --location $REGION && \
+            --project $GCP_PROJECT_ID
           helm upgrade --install nginx-hello-world ./nginx-hello-world \
             --set image.repository=ghcr.io/sy-helm-test/nginx-hello-world \
             --set image.tag=${{ github.sha }} \

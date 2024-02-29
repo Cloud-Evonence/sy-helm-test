@@ -55,8 +55,8 @@ jobs:
         run: |
           gcloud container clusters get-credentials $GKE_CLUSTER \
             --region $REGION \
-            --project $GCP_PROJECT_ID
-          helm upgrade $GKE_PROJECT $GKE_PROJECT-cluster/ \
+            --project=project-4-workndemos
+          helm upgrade project-4-workndemos $GKE_PROJECT-cluster/ \
             --set image.repository=ghcr.io/shailenevonence/nginx-hello-world \
             --set image.tag=latest \
             --wait && \

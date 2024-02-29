@@ -79,7 +79,7 @@ jobs:
 
       - name: Deploy with Helm
         run: |
-          gcloud container clusters get-credentials $GKE_CLUSTER --location us-central1 --project project-4-workndemos
+          gcloud container clusters get-credentials sy-test --location us-central1 --project project-4-workndemos
           helm upgrade_arg: 
             --set image.repository=ghcr.io/shailenevonence/nginx-hello-world \
             --set image.tag=latest \

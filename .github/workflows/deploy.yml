@@ -23,10 +23,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v1
+    # Setup gcloud CLI
+      - uses: google-github-actions/setup-gcloud@1bee7de035d65ec5da40a31f8589e240eba8fde5
         with:
           token_format: 'access_token'
           workload_identity_provider: ${{ secrets.POOL_URL }}
@@ -34,9 +34,26 @@ jobs:
           project_id: ${{ env.GCP_PROJECT_ID }}
           location: ${{ env.REGION }}
 
+      # - name: Authenticate to Google Cloud
+      #   uses: google-github-actions/auth@v1
+      #   with:
+      #     token_format: 'access_token'
+      #     workload_identity_provider: ${{ secrets.POOL_URL }}
+      #     service_account: ${{ secrets.SERVICE_ACCOUNT }}
+      #     project_id: ${{ env.GCP_PROJECT_ID }}
+      #     location: ${{ env.REGION }}
+
       - name: Install gke-gcloud-auth-plugin
         run: |
-          sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
+          sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin \
+          gcloud --quiet auth configure-docker
+
+      # Get the GKE credentials so we can deploy to the cluster
+      - uses: google-github-actions/get-gke-credentials@db150f2cc60d1716e61922b832eae71d2a45938f
+        with:
+          cluster_name: ${{ env.GKE_CLUSTER }}
+          location: ${{ env.REGION }}
+          credentials: ${{ secrets.SERVICE_ACCOUNT }}
 
       - name: Configure Docker
         uses: docker/login-action@v2
@@ -57,7 +74,7 @@ jobs:
       - name: Deploy with Helm
         run: |
           gcloud container clusters get-credentials $GKE_CLUSTER --location us-central1 --project project-4-workndemos
-          helm upgrade --install nginx-hello-world ./nginx-hello-world \
+          helm upgrade_arg: 
             --set image.repository=ghcr.io/shailenevonence/nginx-hello-world \
             --set image.tag=latest \
             --wait

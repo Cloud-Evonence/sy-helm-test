@@ -40,7 +40,15 @@ jobs:
       #     service_account: ${{ secrets.SERVICE_ACCOUNT }}
       #     project_id: ${{ env.GCP_PROJECT_ID }}
       #     location: ${{ env.REGION }}
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
+        with:
+          version: '>= 363.0.0'
 
+      - name: 'Use gcloud CLI'
+        run: 'gcloud auth list'
+
+      
       - name: Install gke-gcloud-auth-plugin
         run: |
           export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"

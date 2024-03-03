@@ -1,7 +1,7 @@
 # values.yaml
 replicaCount: 1
 image:
-  repository: gcr.io/project-4-workndemos/my-app
+  repository: ghcr.io/shailenevonence/sy-helm-test/my-app
   tag: latest
   pullPolicy: IfNotPresent
 

@@ -67,7 +67,7 @@ jobs:
       - name: Deploy with Helm
         run: |
           gcloud container clusters get-credentials sy-test --location us-central1 --project project-4-workndemos
-          helm upgrade $DEPLOYMENT_NAME ./my-node-app-chart-0.1.0.tgz \
+          helm upgrade $DEPLOYMENT_NAME /home/runner/work/sy-helm-test/sy-helm-test/my-node-app-chart/my-node-app-chart-0.1.0.tgz \
             --set image.repository=ghcr.io/shailenevonence/sy-helm-test/my-app \
             --set image.tag=latest \
             --wait

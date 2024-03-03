@@ -61,7 +61,7 @@ jobs:
 
       - name: Deploy with Helm
         run: |
-          gcloud container clusters get-credentials $GKE_CLUSTER --region $REGION --project $GCP_PROJECT_ID
+          gcloud container clusters get-credentials $GKE_CLUSTER --region ${{env.REGION}} --project ${{ env.GCP_PROJECT_ID}}
           helm upgrade $DEPLOYMENT_NAME ./my-node-app-chart-0.1.0.tgz \
             --set image.repository=ghcr.io/shailenevonence/sy-helm-test/my-app \
             --set image.tag=latest \

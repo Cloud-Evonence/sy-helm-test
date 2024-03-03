@@ -10,7 +10,7 @@ env:
   REGION: $REGION
   ZONE: $ZONE
   GKE_CLUSTER: $GKE
-  DEPLOYMENT_NAME: randocats
+  DEPLOYMENT_NAME: my-app-my-node-app-chart
 
 jobs:
   deploy:

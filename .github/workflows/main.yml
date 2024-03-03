@@ -10,7 +10,7 @@ env:
   REGION: $REGION
   ZONE: $ZONE
   GKE_CLUSTER: $GKE
-  DEPLOYMENT_NAME: my-app-my-node-app-chart
+  DEPLOYMENT_NAME: my-app
 
 jobs:
   deploy:
@@ -67,9 +67,14 @@ jobs:
       - name: Deploy with Helm
         run: |
           gcloud container clusters get-credentials sy-test --location us-central1 --project project-4-workndemos
+          # Check if the deployment exists
+          helm status $DEPLOYMENT_NAME || helm install $DEPLOYMENT_NAME /home/runner/work/sy-helm-test/sy-helm-test/my-node-app-chart/my-node-app-chart-0.1.0.tgz --wait
+
+          # Perform upgrade
           helm upgrade $DEPLOYMENT_NAME /home/runner/work/sy-helm-test/sy-helm-test/my-node-app-chart/my-node-app-chart-0.1.0.tgz \
             --set image.repository=ghcr.io/shailenevonence/sy-helm-test/my-app \
             --set image.tag=latest \
             --wait
+
+          # Check deployment rollout status
           kubectl rollout status deployment/$DEPLOYMENT_NAME
-          kubectl get services -o wide

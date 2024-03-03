@@ -1,2 +1,0 @@
-helm create nginx-hello-world
-cd nginx-hello-world
